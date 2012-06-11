@@ -287,7 +287,7 @@ class Webthumbnail
 class WebthumbnailHttpCall
 {
     
-    public $_reponse;
+    public $_response;
     public $_statusCode;
     public $_contentType;
     public $_contentLength;
