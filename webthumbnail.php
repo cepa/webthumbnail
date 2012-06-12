@@ -321,8 +321,10 @@ class WebthumbnailHttpCall
         curl_setopt($ch, CURLOPT_REFERER, $referer);
         curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-        
+		
+        if (!ini_get('open_basedir') && !ini_get('safe_mode'))
+          curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+  
         $this->_response = curl_exec($ch);
         if (!$this->_response) {
             throw new WebthumbnailException("curl_exec failed!");
