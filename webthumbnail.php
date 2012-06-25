@@ -4,7 +4,6 @@
  * =============================================================================
  * 
  * @file        webthumbnail.php
- * @author      Lukasz Cepowski <lukasz[at]cepowski.pl>
  * 
  * @desc        api.webthumbnail.org
  *              The Webthumbnail.org is a free webapi for capturing website 
@@ -322,8 +321,9 @@ class WebthumbnailHttpCall
         curl_setopt($ch, CURLOPT_USERAGENT, $userAgent);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		
-        if (!ini_get('open_basedir') && !ini_get('safe_mode'))
-          curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        if (!ini_get('open_basedir') && !ini_get('safe_mode')) {
+            curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        }
   
         $this->_response = curl_exec($ch);
         if (!$this->_response) {
