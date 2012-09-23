@@ -8,6 +8,7 @@ require $root.'/webthumbnail.php';
 
 $thumb = new Webthumbnail("http://webthumbnail.org");
 $thumb
-    ->setWidth(512)
-    ->setHeight(512)
-    ->captureToBrowser();
+    ->setWidth(320)
+    ->setHeight(240)
+    ->setScreen(1280)
+    ->captureToOutput();

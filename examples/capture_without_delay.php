@@ -6,13 +6,9 @@ ini_set('display_errors', 1);
 $root = dirname(dirname(__FILE__));
 require $root.'/webthumbnail.php';
 
-$path = tempnam('/tmp', 'webthumbnail-');
-
 $thumb = new Webthumbnail("http://webthumbnail.org");
 $thumb
-    ->setWidth(320)
-    ->setHeight(240)
-    ->captureToFile($path);
-
-@chmod($path, 0644);
-echo "Your thumbnail has been saved to ".$path;
+    ->setWidth(480)
+    ->setHeight(360)
+    ->setScreen(1280)
+    ->captureToOutput(false);

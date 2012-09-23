@@ -49,25 +49,27 @@ class Webthumbnail
     
     const API_URL = 'http://api.webthumbnail.org/';
     
-    const BROWSER_CHROME    = 'chrome';
-    const BROWSER_FIREFOX   = 'firefox';
-    const BROWSER_OPERA     = 'opera';
-    
     const FORMAT_PNG = 'png';
     const FORMAT_JPG = 'jpg';
     const FORMAT_GIF = 'gif';
     
-    const MIN_WIDTH = 70;
-    const MAX_WIDTH = 2048;
+    const MIN_WIDTH = 100;
+    const MAX_WIDTH = 500;
     
-    const MIN_HEIGHT = 70;
-    const MAX_HEIGHT = 4096;
+    const MIN_HEIGHT = 100;
+    const MAX_HEIGHT = 500;
+    
+    const SCREEN_1024 = 1024;
+    const SCREEN_1280 = 1280;
+    const SCREEN_1650 = 1650;
+    const SCREEN_1920 = 1920;
     
     protected $_url;
     protected $_width = self::MIN_WIDTH;
     protected $_height = self::MIN_HEIGHT;
-    protected $_browser = self::BROWSER_CHROME;
     protected $_format = self::FORMAT_PNG;
+    protected $_screen = self::SCREEN_1024;
+    protected $_timeout = 120;
     
     /**
      * Init webthumbnail.
@@ -128,35 +130,6 @@ class Webthumbnail
     }
     
     /**
-     * Set browser type.
-     * @param string $browser
-     * @throws WebthumbnailException
-     * @return Webthumbnail
-     */
-    public function setBrowser($browser)
-    {
-        switch (strtolower($browser)) {
-            case self::BROWSER_CHROME:
-            case self::BROWSER_FIREFOX:
-            case self::BROWSER_OPERA:
-                $this->_browser = strtolower($browser);
-                break;
-            default:
-                throw new WebthumbnailException("Unsupported browser type '{$browser}'!");
-        }
-        return $this;
-    }
-    
-    /**
-     * Get browser type.
-     * @return string
-     */
-    public function getBrowser()
-    {
-        return $this->_browser;
-    }
-    
-    /**
      * Set format type.
      * @param string $format
      * @throws WebthumbnailException
@@ -186,6 +159,56 @@ class Webthumbnail
     }
     
     /**
+     * Get screen width.
+     * @param string $screen
+     * @throws WebthumbnailException
+     * @return Webthumbnail
+     */
+    public function setScreen($screen)
+    {
+        switch ($screen) {
+            case self::SCREEN_1024:
+            case self::SCREEN_1280:
+            case self::SCREEN_1650:
+            case self::SCREEN_1920:
+                $this->_screen = $screen;
+                break;
+            default:
+                throw new WebthumbnailException("Unsupported screen width {$screen}!");
+        }
+        return $this;
+    }
+    
+    /**
+     * Get screen width.
+     * @return string
+     */
+    public function getScreen()
+    {
+        return $this->_screen;
+    }
+    
+    /**
+     * Set timeout in seconds.
+     * @param int $timeout
+     * @return Webthumbnail
+     */
+    public function setTimeout($timeout)
+    {
+        $this->_timeout = (int) $timeout;
+        return $this;
+    }
+    
+    /**
+     * Get timeout.
+     * @return int
+     */
+    public function getTimeout()
+    {
+        return $this->_timeout;
+    }
+    
+    /**
      * Get capture url.
      * @return string
      */
@@ -195,7 +218,7 @@ class Webthumbnail
             '?width='   . $this->_width .
             '&height='  . $this->_height .
             '&format='  . $this->_format .
-            '&browser=' . $this->_browser .
+            '&screen='  . $this->_screen .
             '&url=' . $this->_url;
     }
     
@@ -224,19 +247,37 @@ class Webthumbnail
     public function isCaptured()
     {
         $call = $this->callGetStatus();
-        return ($call->getResponse() == 'finished' ? true : false);
+        $response = $call->getResponse();
+        switch ($response) {
+            case 'finished':
+                return true;
+                
+            case 'waiting':
+            case 'pending':
+            case 'loaded':
+                return false;
+                
+            default:
+                throw new WebthumbnailException('Invalid response from api server!');
+        }
     }
     
     /**
      * Capture a thumbnail.
-     * This method send a capture call and waits untill the thumbnail is ready.
+     * This method send a capture call and waits untill the thumbnail is ready or timeout is reached.
      * @return WebthumbnailHttpCall
      */
-    public function capture()
+    public function capture($wait = true)
     {
+        $i = 0;
         $this->callCapture();
-        while (!$this->isCaptured()) {
-            sleep(2);
+        if ($wait) {
+            while (!$this->isCaptured()) {
+                if ($i++ >= $this->_timeout) {
+                    throw new WebthumbnailException('Timeout, try again later!');
+                }
+                sleep(1);
+            }
         }
         return $this->callCapture();
     }
@@ -246,9 +287,9 @@ class Webthumbnail
      * @see examples/capture_to_browser.php
      * @return WebthumbnailHttpCall
      */
-    public function captureToBrowser()
+    public function captureToOutput($wait = true)
     {
-        $call = $this->capture();
+        $call = $this->capture($wait);
         header("Content-Type: ".$call->getContentType());
         header("Content-Length: ".$call->getContentLength());
         echo $call->getResponse();
@@ -262,9 +303,9 @@ class Webthumbnail
      * @throws WebthumbnailException
      * @return WebthumbnailHttpCall
      */
-    public function captureToFile($filename)
+    public function captureToFile($filename, $wait = true)
     {
-        $call = $this->capture();
+        $call = $this->capture($wait);
         if (!@file_put_contents($filename, $call->getResponse(), LOCK_EX)) {
             throw new WebthumbnailException("Cannot write thumbnail to file '{$filename}'!");
         }
