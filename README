@@ -35,7 +35,7 @@ $thumb = new Webthumbnail("http://webthumbnail.org");
 $thumb
     ->setWidth(512)
     ->setHeight(512)
-    ->captureToBrowser();
+    ->captureToOutput();
     
     
 4) How to capture a website screenshot and save it to a disk file?
