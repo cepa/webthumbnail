@@ -11,9 +11,9 @@
  *              thumbnails, fully scalable, cloud based!
  *              Visit http://webthumbnail.org for more information.
  *              
- * @copyright   Copyright (C) 2012 Ognisco Software
+ * @copyright   Copyright (C) 2012 Idea4 Software, Lukasz Cepowski
  *              All rights reserved.
- *              www.ognisco.com
+ *              www.idea4software.com
  *              
  * @license     Redistribution and use in source and binary forms, with or 
  *              without modification, are permitted provided that the following 
