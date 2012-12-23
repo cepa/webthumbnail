@@ -5,15 +5,15 @@
  * 
  * @file        webthumbnail.php
  * 
- * @desc        api.webthumbnail.org
+ * @desc        http://webthumbnail.org
  *              The Webthumbnail.org is a free webapi for capturing website 
  *              screenshots in real browsers. Ready to serve thousands of 
  *              thumbnails, fully scalable, cloud based!
  *              Visit http://webthumbnail.org for more information.
  *              
- * @copyright   Copyright (C) 2012 Idea4 Software, Lukasz Cepowski
+ * @copyright   Copyright (C) 2012 HellWorx Software, Lukasz Cepowski
  *              All rights reserved.
- *              www.idea4software.com
+ *              www.hellworx.com
  *              
  * @license     Redistribution and use in source and binary forms, with or 
  *              without modification, are permitted provided that the following 
