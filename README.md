@@ -12,8 +12,7 @@
 
 **This repository contains legacy code and is no longer maintaned!**
 
-_The [Webthumbnail.org](http://webthumbnail.org) has recently been rebranded to [Miniature.io](https://miniature.io)_
-_Visit [Miniature.io](https://miniature.io) for more information and new PHP client library._
+**The [Webthumbnail.org](http://webthumbnail.org) has recently been rebranded to [Miniature.io](https://miniature.io). Visit [Miniature.io](https://miniature.io) for more information and new PHP client library.**
 
 
 1) What is webthumbnail.org?
