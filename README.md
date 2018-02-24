@@ -1,19 +1,24 @@
 
-                  _     _   _                     _                 _ _ 
+                  _     _   _                     _                 _ _
     __      _____| |__ | |_| |__  _   _ _ __ ___ | |__  _ __   __ _(_) |
     \ \ /\ / / _ \ '_ \| __| '_ \| | | | '_ ` _ \| '_ \| '_ \ / _` | | |
      \ V  V /  __/ |_) | |_| | | | |_| | | | | | | |_) | | | | (_| | | |
       \_/\_/ \___|_.__/ \__|_| |_|\__,_|_| |_| |_|_.__/|_| |_|\__,_|_|_|
-                                                                    
+
 
                          http://webthumbnail.org
-                         
+
                The simplest way to get a website screenshot!
-               
+
+_This repository contains legacy code and is no longer maintaned!_
+
+_The [Webthumbnail.org](http://webthumbnail.org) has recently been rebranded to [Miniature.io](https://miniature.io)_
+_Visit [Miniature.io](https://miniature.io) for more information and new PHP client library._
+
 
 1) What is webthumbnail.org?
 The webthumbnail.org is a free webapi for capturing website screenshots.
-Shortly speaking it is an web based application that you can simply integrate 
+Shortly speaking it is an web based application that you can simply integrate
 with your website and have thumbnails of any website on demand.
 
 This project is a simple php client for using the api.webthumbnail.org directly
@@ -27,8 +32,8 @@ The simples case is to just call the api from pure html code.
 <img src="http://api.webthumbnail.org?width=512&height=512&format=png&browser=firefox&url=http://webthumbnail.org" alt="Captured by webthumbnail.org" />
 
 It will show a screenshot of http://webthumbnail.org directly on your website.
-            
-               
+
+
 3) How to capture a website screenshot from php?
 
 $thumb = new Webthumbnail("http://webthumbnail.org");
@@ -36,8 +41,8 @@ $thumb
     ->setWidth(512)
     ->setHeight(512)
     ->captureToOutput();
-    
-    
+
+
 4) How to capture a website screenshot and save it to a disk file?
 
 $thumb = new Webthumbnail("http://webthumbnail.org");
@@ -45,10 +50,8 @@ $thumb
     ->setWidth(512)
     ->setHeight(512)
     ->captureToFile($path);
-    
+
 5) Need more info?
 Visit http://webthumbnail.org
 
 Feel free to test and use the application :)
-
-
