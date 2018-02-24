@@ -12,7 +12,7 @@
 
 **This repository contains legacy code and is no longer maintaned!**
 
-**The [Webthumbnail.org](http://webthumbnail.org) has recently been rebranded to [Miniature.io](https://miniature.io).
+**The [Webthumbnail.org](http://webthumbnail.org) has recently been rebranded to [Miniature.io](https://miniature.io).<br />
 Visit [Miniature.io](https://miniature.io) for more information and new PHP client library.**
 
 
